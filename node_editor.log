@@ -49,3 +49,23 @@
 2025-06-01 01:52:14,411 - INFO - Nodes connected: 1 -> 2 (link: 23)
 2025-06-01 01:52:14,413 - INFO - Updated connections: {(1, 2)}
 2025-06-01 01:52:14,413 - INFO - Input node 1 has no image data yet
+2025-06-01 14:22:49,097 - INFO - Loading image to node 1: c:\Users\PC_User\Desktop\a_noshell2_01193.jpg
+2025-06-01 14:22:49,123 - INFO - Image loaded successfully: c:\Users\PC_User\Desktop\a_noshell2_01193.jpg
+2025-06-01 14:22:49,123 - INFO - Image shape: (968, 968, 3)
+2025-06-01 14:22:49,123 - INFO - Node 1 image_data status: True
+2025-06-01 14:22:49,124 - INFO - Updating connected display nodes for input node 1
+2025-06-01 14:22:49,124 - INFO - Current connections: set()
+2025-06-01 14:22:49,124 - INFO - Input node 1 has image data: True
+2025-06-01 14:22:51,001 - INFO - Nodes connected: 1 -> 2 (link: 23)
+2025-06-01 14:22:51,001 - INFO - Updated connections: {(1, 2)}
+2025-06-01 14:22:51,002 - INFO - Input node 1 already has image data, updating display immediately
+2025-06-01 14:23:17,117 - INFO - Loading image to node 1: c:\Users\PC_User\Desktop\arcella_mono.jpg
+2025-06-01 14:23:17,124 - INFO - Image loaded successfully: c:\Users\PC_User\Desktop\arcella_mono.jpg
+2025-06-01 14:23:17,124 - INFO - Image shape: (645, 645, 3)
+2025-06-01 14:23:17,124 - INFO - Node 1 image_data status: True
+2025-06-01 14:23:17,124 - INFO - Updating connected display nodes for input node 1
+2025-06-01 14:23:17,124 - INFO - Current connections: set()
+2025-06-01 14:23:17,124 - INFO - Input node 1 has image data: True
+2025-06-01 14:23:18,913 - INFO - Nodes connected: 1 -> 2 (link: 23)
+2025-06-01 14:23:18,913 - INFO - Updated connections: {(1, 2)}
+2025-06-01 14:23:18,914 - INFO - Input node 1 already has image data, updating display immediately
