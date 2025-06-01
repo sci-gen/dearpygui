@@ -2,9 +2,8 @@ import dearpygui.dearpygui as dpg
 import numpy as np
 
 
-def create_sample_image():
+def create_sample_image(width: int = 1, height: int = 1) -> list:
     """Create a sample image (RGBA format)"""
-    width, height = 200, 200
 
     # RGBA形式で直接作成
     image_data = []
@@ -21,20 +20,7 @@ def create_sample_image():
     return image_data
 
 
-def link_callback(sender, app_data):
-    """Callback for node connection"""
-    dpg.add_node_link(app_data[0], app_data[1], parent=sender)
-
-
-def delink_callback(sender, app_data):
-    """Callback for node disconnection"""
-    dpg.delete_item(app_data)
-
-
-texture_tag = "sample_texture"
-
-
-def update_image() -> None:
+def update_image(texture_tag: str) -> None:
     """テクスチャの情報を取得して画像を更新する関数"""
 
     try:
@@ -69,43 +55,37 @@ def update_image() -> None:
 
 def main():
     """Main function"""
+    texture_tag = "sample_texture"
+    w, h = 200, 200  # 画像の幅と高さ
+
     # DearPyGuiコンテキストを作成
     dpg.create_context()
 
     # 最初に画像データを作成
-    image_data = create_sample_image()
+    image_data = create_sample_image(width=w, height=h)
 
     # テクスチャレジストリでテクスチャを作成
     with dpg.texture_registry():
         dpg.add_dynamic_texture(
-            width=200, height=200, default_value=image_data, tag=texture_tag
+            width=w, height=h, default_value=image_data, tag=texture_tag
         )
 
     # メインウィンドウ
     with dpg.window(
-        label="NumPy Image Display - NodeEditor",
+        label="Image Display - NodeEditor",
         width=800,
         height=600,
         tag="main_window",
     ):
         # ノードエディターの設定
-        with dpg.node_editor(
-            callback=link_callback, delink_callback=delink_callback, tag="node_editor"
-        ):
+        with dpg.node_editor(tag="node_editor"):
             # 画像表示ノード
             with dpg.node(label="Image Display", tag="image_node", pos=[50, 50]):
-                with dpg.node_attribute(
-                    label="Image Output",
-                    tag="image_output",
-                    attribute_type=dpg.mvNode_Attr_Static,
-                ):
-                    dpg.add_text("Image Output")
-
                 # Node attribute for image display
                 with dpg.node_attribute(
                     label="Image",
                     tag="image_attr",
-                    attribute_type=dpg.mvNode_Attr_Input,
+                    attribute_type=dpg.mvNode_Attr_Static,
                 ):
                     # Place image inside node_attribute
                     dpg.add_image(texture_tag=texture_tag, width=150, height=150)
@@ -113,50 +93,34 @@ def main():
             # 情報表示ノード
             with dpg.node(label="Image Info", tag="info_node", pos=[300, 50]):
                 with dpg.node_attribute(
-                    label="Image Input",
-                    tag="info_input",
-                    attribute_type=dpg.mvNode_Attr_Input,
-                ):
-                    dpg.add_text("Image Input")
-
-                with dpg.node_attribute(
                     label="Details",
                     tag="info_details",
                     attribute_type=dpg.mvNode_Attr_Static,
                 ):
-                    dpg.add_text("Size: 200x200")
+                    dpg.add_text(f"Size: {w}x{h}")
                     dpg.add_text("Format: RGBA")
-                    dpg.add_text("Data Type: float32")
+                    dpg.add_text(f"Data Type: {type(image_data[0]).__name__}")
 
             # コントロールノード
             with dpg.node(label="Control", tag="control_node", pos=[50, 280]):
-                with dpg.node_attribute(
-                    label="Control Output",
-                    tag="control_output",
-                    attribute_type=dpg.mvNode_Attr_Output,
-                ):
-                    dpg.add_text("Control Output")
 
                 with dpg.node_attribute(
                     label="Operations",
                     tag="control_attr",
                     attribute_type=dpg.mvNode_Attr_Static,
                 ):
-                    dpg.add_button(label="Update Image", callback=update_image)
+                    dpg.add_button(
+                        label="Update Image", callback=lambda: update_image(texture_tag)
+                    )
 
     # ビューポートの設定
     dpg.create_viewport(title="DearPyGui NodeEditor Image App", width=900, height=700)
     dpg.setup_dearpygui()
     dpg.show_viewport()
 
-    # プライマリウィンドウを設定
-    dpg.set_primary_window("main_window", True)
-
-    # メインループ
-    dpg.start_dearpygui()
-
-    # クリーンアップ
-    dpg.destroy_context()
+    dpg.set_primary_window("main_window", True)  # メインウィンドウをプライマリに設定
+    dpg.start_dearpygui()  # DearPyGuiのメインループを開始
+    dpg.destroy_context()  # クリーンアップ
 
 
 if __name__ == "__main__":
